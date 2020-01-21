@@ -10,4 +10,5 @@ fi
 #docker rmi $(docker images -qa)
 
 docker network rm my-mongo-cluster
-
+docker network rm mynet1
+docker network rm mycluster
