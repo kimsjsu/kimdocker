@@ -1,7 +1,6 @@
 #!/bin/bash
 
 containers=$(docker ps -qa |wc -l)
-echo $containers
 
 if [ $containers -ge 1 ]; then
   docker stop $(docker ps -qa)

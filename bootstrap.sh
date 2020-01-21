@@ -35,3 +35,8 @@ sleep 3
 
 docker ps -a
 
+docker cp ../setup_replication.sh c0:/
+docker exec -it c0 chown root:root /setup_replication.sh
+docker exec -it c0 chmod 755 /setup_replication.sh
+docker exec -it c0 /setup_replication.sh
+
