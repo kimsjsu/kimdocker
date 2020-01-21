@@ -18,10 +18,12 @@ cat > Dockerfile <<EOF
 FROM mongo:latest
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y vim wamerican iputils-ping iproute2 telnet python3 python3-pip pymongo
+RUN apt-get install -y vim wamerican iputils-ping iproute2 telnet python3 
+RUN apt-get install -y python3-pip
+RUN pip3 install pymongo
 EOF
 
-docker build . -t "myimage1:Dockerfile"
+docker build . -t "myimage:Dockerfile"
 
 docker network create --subnet 192.168.10.0/24 --ip-range 192.168.10.0/24 my-mongo-cluster
 
