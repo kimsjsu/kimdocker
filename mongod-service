@@ -34,6 +34,24 @@ do_stop()
 	echo "Stopped $DESC"
 }
 
+do_status()
+{
+	psout=$(ps -ef |grep -v grep|grep -v status|grep mongod.conf)
+	if [ ! -z "$psout" ]; then
+		echo "mongod is running"
+	else
+		echo "mongod is NOT running"
+	fi
+}
+
+do_restart()
+{
+	start-stop-daemon --stop --signal 2 -q --pidfile $PIDFILE --name $NAME
+	rm -f $PIDFILE
+        start-stop-daemon -Sbm -p $PIDFILE --exec $DAEMON -- $DAEMON_ARGS 
+	echo "Restarted $DESC"
+}
+
 case "$1" in
   start)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
@@ -51,8 +69,24 @@ case "$1" in
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
 	;;
+  status)
+        [ "$VERBOSE" != no ] && log_daemon_msg ""
+        do_status
+        case "$?" in
+                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
+  restart)
+        [ "$VERBOSE" != no ] && log_daemon_msg ""
+        do_restart
+        case "$?" in
+                0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+                2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
   *)
-	echo "Usage: $SCRIPTNAME {start|stop}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart}" >&2
 	exit 3
 	;;
 esac
