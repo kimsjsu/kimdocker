@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./destroy.sh
+./destroy-all.sh
 ./bootstrap-ubuntu.sh
 ./create-containers.sh
 
