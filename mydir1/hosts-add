@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cat << EOF >> /etc/hosts
+192.168.10.100 node0
+192.168.10.101 node1
+192.168.10.102 node2
+EOF
+
