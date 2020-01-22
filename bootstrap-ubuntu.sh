@@ -8,7 +8,7 @@ if [ ! -d $mydir ]; then
   mkdir $mydir
 fi
 
-cp -p service-mongod $mydir
+cp -p mongod-service mongod.conf $mydir
 cd $mydir
 
 if [ -f "Dockerfile" ]; then
@@ -19,11 +19,11 @@ cat > Dockerfile <<EOF
 FROM ubuntu:latest
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y vim wamerican iputils-ping iproute2 telnet wget curl tree sudo
+RUN apt-get install -y vim wamerican iputils-ping iproute2 telnet wget curl tree sudo git gnupg
 RUN apt-get install -y python3 python3-pip
 RUN pip3 install pymongo
-COPY ./service-mongod /etc/init.d/mongod
-COPY ./hosts-add /tmp/hosts-add
+COPY ./mongod-service /etc/init.d/mongod
+COPY ./mongod.conf /etc/mongod.conf
 RUN chmod 755 /etc/init.d/mongod
 RUN update-rc.d mongod defaults
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
