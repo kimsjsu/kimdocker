@@ -1,12 +1,3 @@
-#!/bin/bash
-
-which docker || (echo "docker does not exist"; exit 1)
-
-if [ -f "Dockerfile" ]; then
-  mv Dockerfile Dockerfile.old
-fi
-
-cat > Dockerfile <<EOF
 FROM ubuntu:latest
 RUN apt update
 RUN apt upgrade -y
@@ -18,7 +9,7 @@ RUN wget https://www.mongodb.org/static/pgp/server-4.2.asc > /dev/null 2>&1
 RUN apt-key add server-4.2.asc
 RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.2.list
 ENV TZ=US/Pacific
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/ /etc/localtime && echo  > /etc/timezone
 RUN apt update
 RUN apt install -y mongodb-org
 COPY ./mongod-service /tmp/mongod-copied
@@ -30,11 +21,3 @@ RUN tr -d '\015' < /tmp/setup_replication.sh-copied > /tmp/setup_replication.sh
 RUN rm -f /tmp/*copied
 RUN chmod 755 /etc/init.d/mongod /tmp/setup_replication.sh
 RUN update-rc.d mongod defaults
-EOF
-
-docker build -t "myimage:Dockerfile" .
-
-docker network create --subnet 192.168.10.0/24 --ip-range 192.168.10.0/24 mycluster
-
-docker ps -a
-
