@@ -2,39 +2,16 @@
 
 which docker || (echo "docker does not exist"; exit 1)
 
-if [ -f "Dockerfile" ]; then
-  mv Dockerfile Dockerfile.old
-fi
-
 cat > Dockerfile <<EOF
 FROM ubuntu:latest
-RUN apt update
-RUN apt upgrade -y
-#RUN apt install -y vim wamerican iputils-ping iproute2 telnet wget curl tree sudo git gnupg
-#RUN apt install -y python3 python3-pip
-#RUN pip3 install pymongo
-RUN apt install -y wget gnupg
-RUN wget https://www.mongodb.org/static/pgp/server-4.2.asc > /dev/null 2>&1
-RUN apt-key add server-4.2.asc
-RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.2.list
-ENV TZ=US/Pacific
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt update
-RUN apt install -y mongodb-org
-COPY ./mongod-service /tmp/mongod-copied
-COPY ./mongod.conf /tmp/mongod.conf-copied
-COPY ./setup_replication.sh /tmp/setup_replication.sh-copied
-RUN tr -d '\015' < /tmp/mongod-copied > /etc/init.d/mongod
-RUN tr -d '\015' < /tmp/mongod.conf-copied > /etc/mongod.conf
-RUN tr -d '\015' < /tmp/setup_replication.sh-copied > /tmp/setup_replication.sh
-RUN rm -f /tmp/*copied
-RUN chmod 755 /etc/init.d/mongod /tmp/setup_replication.sh
-RUN update-rc.d mongod defaults
+RUN apt-get update && apt-get install -y apt-utils vim wamerican iputils-ping iproute2 telnet wget curl tree sudo git gnupg wget python3 python3-pip && pip3 install pymongo && wget https://www.mongodb.org/static/pgp/server-4.2.asc > /dev/null 2>&1 && apt-key add server-4.2.asc && echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.2.list && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && export TZ=US/Pacific && apt-get update && apt-get install -y mongodb-org
+COPY Files-to-copy/* /tmp/copied/
+RUN tr -d '\015' < /tmp/copied/mongod-service > /etc/init.d/mongod && tr -d '\015' < /tmp/copied/mongod.conf > /etc/mongod.conf && tr -d '\015' < /tmp/copied/setup_replication.sh > /tmp/setup_replication.sh && rm -fr /tmp/copied && chmod 755 /etc/init.d/mongod /tmp/setup_replication.sh && update-rc.d mongod defaults
 EOF
 
 docker build -t "myimage:Dockerfile" .
 
+docker network ls |grep mycluster > /dev/null || \
 docker network create --subnet 192.168.10.0/24 --ip-range 192.168.10.0/24 mycluster
 
-docker ps -a
-
+rm -f Dockerfile
