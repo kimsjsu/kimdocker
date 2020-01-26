@@ -3,7 +3,7 @@
 
 if [ $# -eq 1 ]; then
   node_qty=$1
-  if [[ $node_qty -gt 0 && $node_qty -lt 10 ]]; then
+  if [[ $node_qty -gt 0 && $node_qty -le 10 ]]; then
     for n in $(seq 1 $node_qty); do
       docker run -itd --name node$n -h node$n --net mycluster --ip 192.168.10.10$n myimage:Dockerfile
     done
