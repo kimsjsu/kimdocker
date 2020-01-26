@@ -2,6 +2,8 @@
 
 echo -e "\n\033[30;48;5;82m*** Running mongo commands on node1 to set up a replica set of 3 nodes (node1, node2, node3):\033[0m\n"
 
+sleep 5
+
 run_mongo_cmd() {
   echo -e "\n\033[30;48;5;82mmongo> $1\033[0m\n"
   mongo --eval $1

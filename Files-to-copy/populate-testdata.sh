@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\033[30;48;5;82m*** Running mongo commands to populate test data on node1:\033[0m\n"
+echo -e "\n\033[30;48;5;82m*** Running mongo commands from node1 to populate test data:\033[0m\n"
 
 cat <<EOF > /tmp/populate-testdata.js
 use test
