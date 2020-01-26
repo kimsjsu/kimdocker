@@ -25,7 +25,8 @@ if [ $# -eq 1 ]; then
   fi
 else
   for n in 1 2 3; do
-    docker ps -a |grep -q node$n ||create_container $n $n
+    nn="0$n"
+    docker ps -a |grep -q node$n ||create_container $n $nn
   done
 fi
 
