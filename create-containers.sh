@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+docker network ls |grep -q mycluster || \
+docker network create --subnet 192.168.10.0/24 --ip-range 192.168.10.0/24 mycluster
+
 create_container() {
   docker run -td --name node$1 -h node$1 --net mycluster --ip 192.168.10.1$2 myimage:Dockerfile
 }
@@ -8,13 +11,13 @@ create_container() {
 if [ $# -eq 1 ]; then
   node_qty=$1
   if [[ $node_qty -gt 0 && $node_qty -lt 100 ]]; then
-    for n in $(seq -w 01 $node_qty); do
-      if [ $n -lt 10 ]; then
-        n1=$(echo $n|sed 's/0//')
+    for nn in $(seq -w 01 $node_qty); do
+      if [ $nn -lt 10 ]; then
+        n=$(echo $nn|sed 's/0//')
       else
-        n1=$n
+        n=$nn
       fi
-      create_container $n1 $n
+      create_container $n $nn
     done
   else
     echo "Usage: $0 N where 0 < N < 100"
