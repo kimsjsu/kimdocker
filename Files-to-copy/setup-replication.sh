@@ -14,5 +14,5 @@ run_mongo_cmd "rs.add('node3:27017')"
 run_mongo_cmd "rs.status()"
 run_mongo_cmd "rs.conf()"
 
-echo -e "\n\033[30;48;5;82m*** Finished setting up a replica set of 3 nodes (node1, node2, node3).\033[0m\n"
+echo -e "\n\033[30;48;5;82mFinished setting up a replica set of 3 nodes (node1, node2, node3).\033[0m\n"
 echo -e "\n\n\n"
