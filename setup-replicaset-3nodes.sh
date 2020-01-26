@@ -4,6 +4,8 @@ for n in 1 2 3; do
   docker ps -a |grep -q node$n
   if [ $? -ne 0 ]; then
     echo -e "\n\033[1;31mERROR: 3 containers need to exist and be up first.\033[0m\n"
+    echo "$ docker ps -a"
+    docker ps -a
     exit 1
   fi
 done
