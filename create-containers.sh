@@ -32,6 +32,7 @@ else
 fi
 
 echo ""
-echo "$ docker ps -a"
-docker ps -a
+./check-ipaddresses.sh
+#echo "$ docker ps -a"
+#docker ps -a
 
