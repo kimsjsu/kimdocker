@@ -13,7 +13,7 @@ if [ $# -eq 1 ]; then
   if [[ $node_qty -gt 0 && $node_qty -lt 100 ]]; then
     for nn in $(seq -w 01 $node_qty); do
       if [ $nn -lt 10 ]; then
-        n=$(echo $nn|sed 's/0//')
+        n=${nn#0}
       else
         n=$nn
       fi
