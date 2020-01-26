@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo -e "\n\033[30;48;5;82m*** Running mongo commands to populate test data on node1:\033[0m\n"
 
 cat <<EOF > /tmp/populate-testdata.js
 use test
@@ -15,4 +16,8 @@ bulk.execute();
 EOF
 
 mongo < /tmp/populate-testdata.js
+
+echo -e "\n\033[30;48;5;82m*** Finished running the following commands inside mongo on node1:\033[0m\n"
+cat /tmp/populate-testdata.js
+echo ""
 

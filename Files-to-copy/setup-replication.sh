@@ -1,14 +1,15 @@
 #!/bin/bash
 
-cat << EOF > /tmp/replSet.js
-rs.initiate()
-rs.status()
-rs.add("node2:27017")
-rs.add("node3:27017")
-rs.status()
-rs.conf()
-exit
-EOF
+run_mongo_cmd() {
+  echo -e "\n\033[30;48;5;82mmongo> $1\033[0m\n"
+  mongo --eval $1
+} 
 
-mongo < /tmp/replSet.js
+run_mongo_cmd "rs.initiate()"
+run_mongo_cmd "rs.status()"
+run_mongo_cmd "rs.add('node2:27017')"
+run_mongo_cmd "rs.add('node3:27017')"
+run_mongo_cmd "rs.status()"
+run_mongo_cmd "rs.conf()"
+
 
