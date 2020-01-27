@@ -17,7 +17,7 @@ EOF
 
 mongo < /tmp/populate-testdata.js
 
-echo -e "\n\033[30;48;5;82mFinished running the following commands inside mongo on node1:\033[0m\n"
+echo -e "\n\033[30;48;5;82mPopulating test data is complete, using the following commands on node1:\033[0m\n"
 cat /tmp/populate-testdata.js
 echo ""
 
