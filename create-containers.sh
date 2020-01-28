@@ -12,7 +12,7 @@ create_container() {
 if [ $# -eq 1 ]; then
   node_qty=$1
   if [[ $node_qty -gt 0 && $node_qty -lt $max ]]; then
-    for nn in $(seq -w 01 $node_qty); do
+    for nn in $(seq -w 00 $node_qty); do
       if [ $nn -lt 10 ]; then
         n=${nn#0}
       else
