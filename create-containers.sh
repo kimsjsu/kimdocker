@@ -6,7 +6,7 @@ docker network ls |grep -q mycluster || \
 docker network create --subnet 192.168.10.0/24 --ip-range 192.168.10.0/24 mycluster
 
 create_container() {
-  docker run -td --name node$1 -h node$1 --net mycluster --ip 192.168.10.1$2 myimage:Dockerfile
+  docker run -td --name mongodb$1.example.net -h mongodb$1.example.net --net mycluster --ip 192.168.10.1$2 myimage:Dockerfile
 }
 
 if [ $# -eq 1 ]; then
@@ -25,9 +25,9 @@ if [ $# -eq 1 ]; then
     exit 1
   fi
 else
-  for n in 1 2 3; do
+  for n in 0 1 2; do
     nn="0$n"
-    docker ps -a |grep -q node$n ||create_container $n $nn
+    docker ps -a |grep -q mongodb$n.example.net ||create_container $n $nn
   done
 fi
 

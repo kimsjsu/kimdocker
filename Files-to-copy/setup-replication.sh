@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\033[30;48;5;82m*** Running mongo commands on node1 to set up a replica set of 3 nodes (node1, node2, node3):\033[0m\n"
+echo -e "\n\033[30;48;5;82m*** Running mongo commands on mongodb0.example.net to set up a replica set of 3 nodes:\033[0m\n"
 
 sleep 5
 
@@ -11,10 +11,10 @@ run_mongo_cmd() {
 
 run_mongo_cmd "rs.initiate()"
 run_mongo_cmd "rs.status()"
-run_mongo_cmd "rs.add('node2:27017')"
-run_mongo_cmd "rs.add('node3:27017')"
+run_mongo_cmd "rs.add('mongodb1.example.net:27017')"
+run_mongo_cmd "rs.add('mongodb2.example.net:27017')"
 run_mongo_cmd "rs.status()"
 run_mongo_cmd "rs.conf()"
 
-echo -e "\n\033[30;48;5;82mFinished setting up a replica set of 3 nodes (node1, node2, node3).\033[0m\n"
+echo -e "\n\033[30;48;5;82mFinished setting up a replica set of 3 nodes.\033[0m\n"
 echo -e "\n\n\n"
