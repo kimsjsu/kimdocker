@@ -9,6 +9,7 @@ RUN apt-get update \
     apt-utils vim wamerican iputils-ping \
     iproute2 telnet wget curl tree sudo \
     git gnupg wget python3 python3-pip \
+ && apt-get clean \
  && pip3 install pymongo \
  && wget https://www.mongodb.org/static/pgp/server-4.2.asc > /dev/null 2>&1 \
  && apt-key add server-4.2.asc \
@@ -17,7 +18,8 @@ RUN apt-get update \
  && echo $TZ > /etc/timezone \
  && export TZ=US/Pacific \
  && apt-get update \
- && apt-get install -y mongodb-org
+ && apt-get install -y mongodb-org \
+ && apt-get clean \
 COPY Files-to-copy/* /tmp/copied/
 RUN tr -d '\015' < /tmp/copied/service-script-mongod > /etc/init.d/mongod \
  && tr -d '\015' < /tmp/copied/mongod.conf > /etc/mongod.conf \
