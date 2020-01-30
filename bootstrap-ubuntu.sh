@@ -19,7 +19,7 @@ RUN apt-get update \
  && export TZ=US/Pacific \
  && apt-get update \
  && apt-get install -y mongodb-org \
- && apt-get clean \
+ && apt-get clean
 COPY Files-to-copy/* /tmp/copied/
 RUN tr -d '\015' < /tmp/copied/service-script-mongod > /etc/init.d/mongod \
  && tr -d '\015' < /tmp/copied/mongod.conf > /etc/mongod.conf \
