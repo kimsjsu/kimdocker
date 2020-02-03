@@ -1,9 +1,16 @@
 #!/bin/bash
+# This script is to customize the Ubuntu Docker image with necessary 
+# packages and configurations for Dr. S. Kim's CS157C NoSQL class. 
+# 1. Download Ubuntu:18.04 image from Docker Hub(https:hub.docker.com)
+# 2. Install necessary packages including MongoDB into the custom image.
+# 3. Copy necessary scripts into the custom image.
+# 4. Configure the Docker network.
+
 
 which docker || (echo "docker does not exist"; exit 1)
 
 cat > Dockerfile <<EOF
-FROM ubuntu:latest
+FROM ubuntu:18.04
 RUN apt-get update \
  && apt-get install -y \
     apt-utils vim wamerican iputils-ping \
@@ -25,7 +32,8 @@ RUN tr -d '\015' < /tmp/copied/service-script-mongod > /etc/init.d/mongod \
  && tr -d '\015' < /tmp/copied/mongod.conf > /etc/mongod.conf \
  && rm -fr /tmp/copied \
  && chmod 755 /etc/init.d/mongod \
- && update-rc.d mongod defaults
+ && update-rc.d mongod defaults \
+ && mkdir -p /data/db
 EOF
 
 docker build -t "myimage:Dockerfile" .

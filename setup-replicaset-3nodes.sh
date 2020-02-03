@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script is to set up a MongoDB replica set of three members 
+# in a cluster of three nodes for Dr. Kim's CS157C NoSQL class.  
+# Each replica set member resides in a separate node. 
+# This script also populates data in the replica set.  
+
 for n in 0 1 2; do
   docker ps -a |grep -q mongodb$n.example.net
   if [ $? -ne 0 ]; then
