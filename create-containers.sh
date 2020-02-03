@@ -18,11 +18,11 @@ create_container() {
 if [ $# -eq 1 ]; then
   node_qty=$1
   if [[ $node_qty -gt 0 && $node_qty -lt $max ]]; then
-    for nn in 0{0..$((node_qty))}; do
-      if [ $nn -ge 10 ]; then
+    for nn in $(seq -f "%02g" 0 $node_qty); do
+      if [ $nn -lt 10 ]; then
         n=${nn#0}
       fi
-      create_container $nn $n
+      create_container $n $nn
     done
   else
     echo -e "\n\033[1;31mUsage: $0 N where 0 < N < $max\033[0m\n"
