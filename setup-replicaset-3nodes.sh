@@ -15,6 +15,7 @@ for n in 0 1 2; do
   fi
 done
 
+chmod 755 Files-to-copy/*.sh
 docker cp Files-to-copy/setup-replication.sh mongodb0.example.net:/tmp
 docker cp Files-to-copy/populate-testdata.sh mongodb0.example.net:/tmp
 
