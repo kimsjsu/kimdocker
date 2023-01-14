@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script is to customize the Ubuntu Docker image with necessary 
 # packages and configurations for Dr. S. Kim's CS157C NoSQL class. 
-# 1. Download Ubuntu:18.04 image from Docker Hub(https:hub.docker.com)
+# 1. Download Ubuntu:20.04 image from Docker Hub(https:hub.docker.com)
 # 2. Install necessary packages including MongoDB into the custom image.
 # 3. Copy necessary scripts into the custom image.
 # 4. Configure the Docker network.
@@ -10,7 +10,7 @@
 which docker || (echo "docker does not exist"; exit 1)
 
 cat > Dockerfile <<EOF
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 RUN apt-get update \
  && apt-get install -y \
     apt-utils vim wamerican iputils-ping \
@@ -18,9 +18,9 @@ RUN apt-get update \
     git gnupg wget python3 python3-pip \
  && apt-get clean \
  && pip3 install pymongo \
- && wget https://www.mongodb.org/static/pgp/server-4.2.asc > /dev/null 2>&1 \
- && apt-key add server-4.2.asc \
- && echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.2.list \
+ && wget https://www.mongodb.org/static/pgp/server-5.0.asc > /dev/null 2>&1 \
+ && apt-key add server-5.0.asc \
+ && echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-5.0.list \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  && export TZ=US/Pacific \
